@@ -24,6 +24,7 @@ export function AdminProjects() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (!auth) return;
@@ -57,6 +58,31 @@ export function AdminProjects() {
       setMessage("Project saved.");
     } catch {
       setMessage("Could not save. Check your Firestore rules.");
+    }
+  }
+
+  async function uploadImage(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file || !user) return;
+    setUploading(true);
+    setMessage("");
+    try {
+      const body = new FormData();
+      body.append("file", file);
+      const response = await fetch("/api/cloudinary/upload", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${await user.getIdToken()}` },
+        body,
+      });
+      const result = await response.json() as { url?: string; error?: string };
+      if (!response.ok || !result.url) throw new Error(result.error || "Upload failed");
+      setForm((current) => ({ ...current, image: result.url as string }));
+      setMessage("Image uploaded. Save the project to keep it.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Image upload failed.");
+    } finally {
+      setUploading(false);
+      event.target.value = "";
     }
   }
 
@@ -107,6 +133,11 @@ export function AdminProjects() {
             <textarea required value={form.description} onChange={(event) => setForm({ ...form, description: event.target.value })} placeholder="Description" rows={4} className="admin-input light" />
             <input value={form.technologies.join(", ")} onChange={(event) => setForm({ ...form, technologies: event.target.value.split(",").map((item) => item.trim()).filter(Boolean) })} placeholder="Technologies, comma separated" className="admin-input light" />
             <input value={form.image} onChange={(event) => setForm({ ...form, image: event.target.value })} placeholder="Image URL or Firebase Storage URL" className="admin-input light" />
+            <label className="block cursor-pointer border border-dashed border-black/20 p-4 text-sm text-black/50 hover:border-[#69a65b]">
+              <span className="block text-xs font-bold uppercase tracking-[0.12em] text-black/70">{uploading ? "Uploading image..." : "Upload project image to Cloudinary"}</span>
+              <span className="mt-1 block text-xs">PNG, JPG, WEBP up to 8MB</span>
+              <input type="file" accept="image/png,image/jpeg,image/webp" onChange={uploadImage} disabled={uploading} className="sr-only" />
+            </label>
             <input value={form.link} onChange={(event) => setForm({ ...form, link: event.target.value })} placeholder="Live project URL" className="admin-input light" />
             <input value={form.github} onChange={(event) => setForm({ ...form, github: event.target.value })} placeholder="GitHub URL" className="admin-input light" />
             <input type="number" value={form.order} onChange={(event) => setForm({ ...form, order: Number(event.target.value) })} placeholder="Display order" className="admin-input light" />

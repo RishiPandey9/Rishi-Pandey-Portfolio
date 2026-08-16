@@ -19,6 +19,9 @@ export interface PortfolioProject {
   link: string;
   github: string;
   order: number;
+  role?: string;
+  scope?: string;
+  highlights?: string[];
 }
 
 const projectsCollection = collection(db, "projects");
