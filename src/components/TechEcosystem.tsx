@@ -68,10 +68,10 @@ function TechLayer({ items, reverse = false }: { items: typeof technologies; rev
 
 export function TechEcosystem() {
   return (
-    <section className="relative overflow-hidden bg-[#f3eee8] py-32 text-[#040403] md:py-40">
+    <section className="relative overflow-hidden bg-[#f3eee8] py-24 text-[#040403] md:py-28">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
 
-      <div className="mx-auto mb-14 max-w-[1400px] px-6 md:px-10">
+      <div className="mx-auto mb-12 max-w-[1400px] px-6 md:px-10">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

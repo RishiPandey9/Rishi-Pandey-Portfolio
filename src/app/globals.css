@@ -32,10 +32,17 @@
   to { transform: translate3d(0, 0, 0); }
 }
 
-.tech-track { animation: tech-marquee 34s linear infinite; }
-.tech-track-reverse { animation-name: tech-marquee-reverse; animation-duration: 39s; }
-.tech-layer:hover .tech-track,
-.tech-layer:focus-within .tech-track { animation-play-state: paused; }
+.tech-track {
+  animation: tech-marquee 26s linear infinite;
+  will-change: transform;
+}
+
+.tech-track-reverse {
+  animation-name: tech-marquee-reverse;
+  animation-duration: 31s;
+}
+
+.tech-layer:hover .tech-track { animation-play-state: paused; }
 
 @media (prefers-reduced-motion: reduce) {
   .tech-track,
