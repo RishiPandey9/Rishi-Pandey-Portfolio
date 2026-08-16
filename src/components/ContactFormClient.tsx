@@ -30,13 +30,13 @@ export default function ContactFormClient() {
   };
 
   const inputCls =
-    "w-full bg-white border border-black/[0.12] px-4 py-3 text-[13px] text-[#0a0a0a] placeholder:text-black/30 focus:outline-none focus:border-[#dc2626] transition-colors duration-200";
+    "w-full bg-[#fffdfa] border border-black/[0.12] px-4 py-3 text-[13px] text-[#0a0a0a] placeholder:text-black/30 focus:outline-none focus:border-[#69a65b] transition-colors duration-200";
   const labelCls = "block text-[9px] font-mono tracking-[0.18em] text-black/40 uppercase mb-1.5";
 
   if (status === "success") {
     return (
       <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
-        <div className="w-12 h-12 bg-[#dc2626] flex items-center justify-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#69a65b]">
           <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="white" strokeWidth="2.5">
             <path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -47,7 +47,7 @@ export default function ContactFormClient() {
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="mt-2 text-[11px] font-mono tracking-widest text-[#dc2626] underline underline-offset-4"
+          className="mt-2 text-[11px] font-mono tracking-widest text-[#d63d21] underline underline-offset-4"
         >
           Send another
         </button>
@@ -97,7 +97,7 @@ export default function ContactFormClient() {
       </div>
 
       {status === "error" && (
-        <p className="text-[12px] text-[#dc2626] font-mono">
+        <p className="text-[12px] font-mono text-[#d63d21]">
           Something went wrong. Check your Firebase config and try again.
         </p>
       )}
@@ -105,7 +105,7 @@ export default function ContactFormClient() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="flex items-center justify-center gap-3 w-full py-4 bg-[#dc2626] text-white text-[11px] font-black tracking-widest hover:bg-[#b91c1c] disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-200"
+        className="flex w-full items-center justify-center gap-3 rounded-full bg-[#69a65b] py-4 text-[11px] font-black tracking-widest text-[#102012] transition-[background-color,transform] duration-200 hover:bg-[#82bd70] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "loading" ? "SENDING..." : "START A CONVERSATION"}
         {status !== "loading" && (

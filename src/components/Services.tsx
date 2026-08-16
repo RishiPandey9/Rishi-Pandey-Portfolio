@@ -49,7 +49,7 @@ const ICONS: Record<string, React.ReactNode> = {
 
 export function Services() {
   return (
-    <section id="services" className="relative bg-[#f5f5f5] text-[#0a0a0a] py-24 overflow-hidden">
+    <section id="services" className="relative overflow-hidden bg-[#f3eee8] py-32 text-[#040403] md:py-40">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
@@ -58,16 +58,16 @@ export function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
-          className="mb-14"
+          className="mb-20"
         >
-          <p className="text-[#dc2626] text-[10px] font-mono tracking-[0.3em] uppercase flex items-center gap-2 mb-3">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#dc2626]" />
+          <p className="mb-3 flex items-center gap-2 text-[10px] font-mono tracking-[0.3em] uppercase text-[#d63d21]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#d63d21]" />
             WHAT I DO
           </p>
-          <h2 className="text-[clamp(2rem,4vw,3.2rem)] font-black tracking-tighter text-[#0a0a0a]">SERVICES</h2>
+          <h2 className="text-[clamp(3rem,7vw,6.5rem)] font-black leading-[0.82] tracking-[-0.08em] text-[#040403]">SERVICES<span className="text-[#69a65b]">.</span></h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-0 border border-black/[0.08]">
+        <div className="grid grid-cols-1 gap-px overflow-hidden rounded-[1.5rem] border border-black/[0.08] bg-black/[0.08] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {services.map((service, i) => (
             <motion.div
               key={service.title}
@@ -77,9 +77,9 @@ export function Services() {
               whileTap={{ scale: 0.99 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.65, delay: i * 0.08 }}
-              className="group border-r border-b border-black/[0.08] p-6 flex flex-col gap-4 hover:bg-white transition-[background-color,box-shadow] duration-300 cursor-default xl:border-b-0 last:border-r-0 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)]"
+              className="group min-h-[290px] cursor-default border-black/[0.08] bg-[#f3eee8] p-7 flex flex-col gap-5 transition-[background-color,box-shadow,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[#fffdfa] hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)]"
             >
-              <div className="text-[#0a0a0a]/40 group-hover:text-[#dc2626] transition-colors duration-300">
+              <div className="text-[#040403]/40 transition-colors duration-300 group-hover:text-[#69a65b]">
                 {ICONS[service.icon]}
               </div>
               <div className="flex flex-col gap-2 flex-1">
@@ -92,7 +92,7 @@ export function Services() {
                 <svg
                   viewBox="0 0 20 20"
                   fill="none"
-                  className="w-4 h-4 text-[#dc2626] opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
+                  className="h-4 w-4 text-[#d63d21] opacity-60 transition-[opacity,transform] duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
                   stroke="currentColor"
                   strokeWidth="2"
                 >

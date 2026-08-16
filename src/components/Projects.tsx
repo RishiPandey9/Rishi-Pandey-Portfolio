@@ -13,14 +13,14 @@ function ProjectCard({ p, i }: { p: typeof projects[0]; i: number }) {
       whileTap={{ scale: 0.99 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, delay: i * 0.07, ease: [0.23, 1, 0.32, 1] }}
-      className="group relative border border-white/[0.07] bg-[#111] overflow-hidden flex flex-col transition-[border-color,box-shadow] duration-300 hover:border-[#dc2626]/40 hover:shadow-[0_18px_50px_rgba(0,0,0,0.28)]"
+      className="group relative flex min-h-[500px] flex-col overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-[#101010] transition-[border-color,box-shadow] duration-500 hover:border-[#d63d21]/50 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
     >
       {/* Image area */}
-      <div className="relative h-44 bg-[#0d0d0d] overflow-hidden">
+      <div className="relative h-56 overflow-hidden bg-[#0d0d0d]">
         <div
           className="absolute inset-0 group-hover:scale-105 transition-transform duration-500"
           style={{
-            background: `radial-gradient(ellipse 70% 60% at 50% 50%, rgba(220,38,38,${0.08 + i * 0.02}) 0%, transparent 70%), linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%)`,
+            background: `radial-gradient(ellipse 70% 60% at 50% 50%, rgba(105,166,91,${0.08 + i * 0.02}) 0%, transparent 70%), linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%)`,
           }}
         />
         <div className="absolute inset-0 flex items-center justify-center opacity-[0.06]">
@@ -47,7 +47,7 @@ function ProjectCard({ p, i }: { p: typeof projects[0]; i: number }) {
       {/* Content */}
       <div className="p-5 flex flex-col gap-3 flex-1">
         <div className="flex items-start justify-between gap-2">
-          <p className="text-[#dc2626] text-xs font-mono font-bold">{p.id}</p>
+        <p className="text-[#d63d21] text-xs font-mono font-bold">{p.id}</p>
           <span className="text-[9px] font-mono tracking-[0.15em] text-white/20 uppercase">{p.category}</span>
         </div>
         <h3 className="font-black text-sm tracking-tight text-white uppercase">{p.name}</h3>
@@ -66,8 +66,8 @@ function ProjectCard({ p, i }: { p: typeof projects[0]; i: number }) {
 
 export function Projects() {
   return (
-    <section id="projects" className="relative bg-[#0a0a0a] text-foreground py-24 overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#dc2626]/20 to-transparent" />
+    <section id="projects" className="relative overflow-hidden bg-[#040403] py-32 text-foreground md:py-40">
+      <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-[#69a65b]/30 to-transparent" />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <motion.div
@@ -75,18 +75,18 @@ export function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
-          className="flex items-end justify-between mb-12"
+          className="mb-20 flex items-end justify-between"
         >
           <div>
-            <p className="text-[#dc2626] text-[10px] font-mono tracking-[0.3em] uppercase flex items-center gap-2 mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#dc2626]" />
+            <p className="mb-3 flex items-center gap-2 text-[10px] font-mono tracking-[0.3em] uppercase text-[#d63d21]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#d63d21]" />
               FEATURED PROJECTS
             </p>
-            <h2 className="text-[clamp(2rem,4vw,3.2rem)] font-black tracking-tighter text-white">SELECTED WORK</h2>
+            <h2 className="text-[clamp(3rem,7vw,6.5rem)] font-black leading-[0.82] tracking-[-0.08em] text-white">SELECTED<br />WORK<span className="text-[#69a65b]">.</span></h2>
           </div>
           <a
             href="#projects"
-            className="hidden md:flex items-center gap-2 text-[10px] font-mono tracking-[0.2em] text-white/30 hover:text-[#dc2626] transition-colors uppercase"
+            className="hidden items-center gap-2 text-[10px] font-mono tracking-[0.2em] text-white/30 uppercase transition-colors hover:text-[#69a65b] md:flex"
           >
             VIEW ALL PROJECTS
             <svg viewBox="0 0 14 14" fill="none" className="w-3 h-3" stroke="currentColor" strokeWidth="2">

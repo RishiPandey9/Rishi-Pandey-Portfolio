@@ -9,16 +9,16 @@ const card = {
 };
 
 const TIER_COLORS: Record<string, string> = {
-  Rare: "bg-blue-500",
-  Epic: "bg-purple-500",
-  Mythic: "bg-[#dc2626]",
+  Rare: "bg-[#69a65b]",
+  Epic: "bg-[#e5d3c9]",
+  Mythic: "bg-[#d63d21]",
 };
 
 export function Stats() {
   return (
-    <section className="relative bg-[#0a0a0a] text-foreground py-20 overflow-hidden">
+    <section className="relative overflow-hidden bg-[#040403] py-32 text-foreground md:py-40">
       {/* Subtle top border accent */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#dc2626]/30 to-transparent" />
+      <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-[#69a65b]/35 to-transparent" />
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <motion.div
@@ -26,13 +26,13 @@ export function Stats() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-4 mb-10"
+          className="mb-16 flex items-end gap-5"
         >
-          <span className="text-[#dc2626] text-[10px] font-mono tracking-[0.3em] uppercase flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#dc2626]" />
+          <span className="flex items-center gap-2 text-[10px] font-mono tracking-[0.3em] uppercase text-[#d63d21]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#d63d21]" />
             STATS DEFINING
           </span>
-          <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-white">
+          <h2 className="text-[clamp(2.8rem,6vw,5.5rem)] font-black leading-[0.82] tracking-[-0.08em] text-white">
             THE JOURNEY
             <span className="text-white/20 ml-2">·</span>
           </h2>
@@ -43,10 +43,10 @@ export function Stats() {
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           transition={{ staggerChildren: 0.1 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
         >
           {/* Card 1: Projects Shipped with line chart */}
-          <motion.div variants={card} className="border border-white/[0.08] bg-[#111] p-6 flex flex-col gap-4">
+          <motion.div variants={card} className="min-h-[260px] rounded-[1.5rem] border border-white/[0.1] bg-[#101010] p-7 flex flex-col gap-4">
             <div>
               <p className="text-[10px] font-mono tracking-[0.2em] text-white/30 uppercase mb-1">Trade Volume (Code)</p>
               <p className="text-4xl font-black text-white tracking-tighter">10+</p>
@@ -57,17 +57,17 @@ export function Stats() {
               <polyline
                 points="0,38 20,30 40,22 55,28 70,15 90,8 120,2"
                 fill="none"
-                stroke="#dc2626"
+                stroke="#69a65b"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-              <circle cx="120" cy="2" r="3" fill="#dc2626" />
+              <circle cx="120" cy="2" r="3" fill="#69a65b" />
             </svg>
           </motion.div>
 
           {/* Card 2: Rarity System */}
-          <motion.div variants={card} className="border border-white/[0.08] bg-[#111] p-6 flex flex-col gap-4">
+          <motion.div variants={card} className="min-h-[260px] rounded-[1.5rem] border border-white/[0.1] bg-[#101010] p-7 flex flex-col gap-4">
             <div>
               <p className="text-[10px] font-mono tracking-[0.2em] text-white/30 uppercase mb-1">Rarity System</p>
               <p className="text-4xl font-black text-white tracking-tighter">3</p>
@@ -84,7 +84,7 @@ export function Stats() {
           </motion.div>
 
           {/* Card 3: Total Technologies */}
-          <motion.div variants={card} className="border border-white/[0.08] bg-[#111] p-6 flex flex-col gap-4">
+          <motion.div variants={card} className="min-h-[260px] rounded-[1.5rem] border border-white/[0.1] bg-[#101010] p-7 flex flex-col gap-4">
             <div>
               <p className="text-[10px] font-mono tracking-[0.2em] text-white/30 uppercase mb-1">Technologies Mastered</p>
               <p className="text-4xl font-black text-white tracking-tighter">20+</p>
@@ -104,7 +104,7 @@ export function Stats() {
           </motion.div>
 
           {/* Card 4: Unique Clients */}
-          <motion.div variants={card} className="border border-white/[0.08] bg-[#111] p-6 flex flex-col gap-4">
+          <motion.div variants={card} className="min-h-[260px] rounded-[1.5rem] border border-white/[0.1] bg-[#101010] p-7 flex flex-col gap-4">
             <div>
               <p className="text-[10px] font-mono tracking-[0.2em] text-white/30 uppercase mb-1">Unique Clients</p>
               <p className="text-4xl font-black text-white tracking-tighter">5+</p>

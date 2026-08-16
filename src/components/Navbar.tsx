@@ -41,8 +41,8 @@ export function Navbar() {
         <div className={`mx-auto flex h-14 max-w-[1320px] items-center justify-between rounded-full border px-4 shadow-[0_14px_50px_rgba(0,0,0,0.18)] transition-[background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] md:px-6 ${scrolled ? "border-white/[0.12] bg-[#0a0a0a]/92 backdrop-blur-xl" : "border-white/[0.08] bg-[#0a0a0a]/65 backdrop-blur-xl"}`}>
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
-            <div className="w-8 h-8 bg-[#dc2626] flex items-center justify-center rounded-sm">
-              <span className="text-white font-black text-sm tracking-tight">RP</span>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#69a65b]">
+              <span className="text-[#102012] font-black text-sm tracking-tight">RP</span>
             </div>
             <span className="text-[13px] font-semibold tracking-wider text-foreground/90 uppercase hidden sm:block">
               {personalInfo.name}
@@ -62,7 +62,7 @@ export function Navbar() {
                 {active === item.name && (
                   <motion.span
                     layoutId="nav-indicator"
-                    className="w-1 h-1 rounded-full bg-[#dc2626]"
+                    className="h-1 w-1 rounded-full bg-[#69a65b]"
                   />
                 )}
               </Link>
@@ -73,7 +73,7 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-3">
             <a
               href="#contact"
-              className="flex items-center gap-2 px-5 py-2 text-[11px] font-bold tracking-widest border border-white/25 text-foreground hover:border-[#dc2626] hover:text-[#dc2626] transition-all duration-200 rounded-none"
+              className="flex items-center gap-2 rounded-full border border-white/25 px-5 py-2 text-[11px] font-bold tracking-widest text-foreground transition-[border-color,color] duration-200 hover:border-[#69a65b] hover:text-[#69a65b]"
             >
               LET&apos;S TALK
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -127,7 +127,7 @@ export function Navbar() {
               transition={{ duration: 0.35, delay: navItems.length * 0.05 }}
               href="#contact"
               onClick={() => setOpen(false)}
-              className="mt-4 px-8 py-3 bg-[#dc2626] text-white font-bold text-sm tracking-widest"
+              className="mt-4 rounded-full bg-[#69a65b] px-8 py-3 text-sm font-bold tracking-widest text-[#102012]"
             >
               LET&apos;S TALK
             </motion.a>
