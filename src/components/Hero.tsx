@@ -72,7 +72,7 @@ export function Hero() {
           <motion.div style={{ y: visualY, scale: visualScale, opacity: fade }} className="relative mx-auto mt-12 aspect-[0.86] w-[min(86vw,480px)] lg:mt-0 lg:mr-[8%] lg:w-[min(38vw,500px)]">
             <div className="absolute inset-[7%] rounded-[48%_48%_42%_42%] bg-[#d9c7bd] opacity-90" />
             <div className="hero-reference-portrait absolute inset-[9%] overflow-hidden rounded-[48%_48%_42%_42%] border border-white/20 bg-[#8d979d]">
-              <Image src="/profile.png" alt="Portrait of Rishi Pandey" fill priority className="object-cover object-top grayscale-[0.28] contrast-[1.02]" />
+              <Image src="/profile.png" alt="Portrait of Rishi Pandey" fill priority sizes="(max-width: 768px) 100vw, 48vw" className="object-cover object-top grayscale-[0.28] contrast-[1.02]" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#040403]/75 via-transparent to-[#69a65b]/10" />
               <div className="absolute inset-x-7 top-7 flex items-center justify-between text-[9px] font-mono tracking-[0.2em] text-white/60">
                 <span>RP / 01</span>

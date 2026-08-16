@@ -34,3 +34,14 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Project admin
+
+The project list is managed from `/admin` with Firebase Authentication and Firestore.
+
+1. Add the values from `.env.local.example` to `.env.local`.
+2. In Firebase Authentication, enable Email/Password and create the admin user manually. Keep public sign-up disabled.
+3. Deploy `firestore.rules` in the Firebase console or with the Firebase CLI.
+4. Open `http://localhost:3000/admin`, sign in, and create or edit projects.
+
+The public Projects section reads the `projects` collection in Firestore. If Firebase is not configured, or the collection is empty, it uses the local fallback data in `src/lib/data.ts`.

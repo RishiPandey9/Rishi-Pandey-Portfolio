@@ -1,22 +1,33 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { projects } from "@/lib/data";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { projects as localProjects } from "@/lib/data";
+import { isFirebaseConfigured } from "@/lib/firebase/config";
+import { loadProjects, type PortfolioProject } from "@/lib/firebase/projects";
 import { ArrowSquareOut } from "@phosphor-icons/react";
 
-function ProjectCard({ p, i }: { p: typeof projects[0]; i: number }) {
+function ProjectCard({ p, i }: { p: PortfolioProject; i: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start 0.9", "start 0.28"],
+  });
+  const fromX = i % 2 === 0 ? -180 : 180;
+  const x = useTransform(scrollYProgress, [0, 1], [fromX, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7, 1], [0, 0.5, 1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      ref={cardRef}
+      style={{ x, opacity, scale, zIndex: i + 1 }}
       whileHover={{ y: -6 }}
       whileTap={{ scale: 0.99 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay: i * 0.07, ease: [0.23, 1, 0.32, 1] }}
-      className="group relative flex min-h-[500px] flex-col overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-[#101010] transition-[border-color,box-shadow] duration-500 hover:border-[#d63d21]/50 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)]"
+      className="sticky top-24 mx-auto flex min-h-[430px] w-full flex-col overflow-hidden rounded-[1.5rem] border border-white/[0.1] bg-[#101010] transition-[border-color,box-shadow] duration-500 hover:border-[#d63d21]/50 hover:shadow-[0_24px_60px_rgba(0,0,0,0.3)] md:flex-row"
     >
       {/* Image area */}
-      <div className="relative h-56 overflow-hidden bg-[#0d0d0d]">
+      <div className="relative h-64 overflow-hidden bg-[#0d0d0d] md:h-auto md:w-[43%]">
         <div
           className="absolute inset-0 group-hover:scale-105 transition-transform duration-500"
           style={{
@@ -45,14 +56,14 @@ function ProjectCard({ p, i }: { p: typeof projects[0]; i: number }) {
       </div>
 
       {/* Content */}
-      <div className="p-5 flex flex-col gap-3 flex-1">
+      <div className="flex flex-1 flex-col gap-4 p-6 md:p-9">
         <div className="flex items-start justify-between gap-2">
-        <p className="text-[#d63d21] text-xs font-mono font-bold">{p.id}</p>
+          <p className="font-mono text-xs font-bold text-[#d63d21]">{p.id}</p>
           <span className="text-[9px] font-mono tracking-[0.15em] text-white/20 uppercase">{p.category}</span>
         </div>
-        <h3 className="font-black text-sm tracking-tight text-white uppercase">{p.name}</h3>
-        <p className="text-[12px] text-white/40 leading-relaxed flex-1">{p.description}</p>
-        <div className="flex flex-wrap gap-1.5 pt-2 border-t border-white/[0.06]">
+        <h3 className="max-w-xl text-2xl font-black uppercase tracking-[-0.04em] text-white md:text-4xl">{p.name}</h3>
+        <p className="max-w-xl flex-1 text-sm leading-relaxed text-white/40">{p.description}</p>
+        <div className="flex flex-wrap gap-1.5 border-t border-white/[0.06] pt-4">
           {p.technologies.map((t) => (
             <span key={t} className="px-2 py-0.5 text-[9px] font-mono text-white/35 border border-white/[0.08] bg-white/[0.03]">
               {t}
@@ -65,6 +76,19 @@ function ProjectCard({ p, i }: { p: typeof projects[0]; i: number }) {
 }
 
 export function Projects() {
+  const [projects, setProjects] = useState<PortfolioProject[]>(localProjects.map((project, index) => ({ ...project, order: index })));
+
+  useEffect(() => {
+    if (!isFirebaseConfigured) return;
+
+    void loadProjects(
+      (remoteProjects) => {
+        if (remoteProjects.length > 0) setProjects(remoteProjects);
+      },
+      () => undefined,
+    );
+  }, []);
+
   return (
     <section id="projects" className="relative overflow-hidden bg-[#040403] py-32 text-foreground md:py-40">
       <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-[#69a65b]/30 to-transparent" />
@@ -95,7 +119,7 @@ export function Projects() {
           </a>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mx-auto flex max-w-5xl flex-col gap-[28vh] pb-[35vh] md:gap-[38vh]">
           {projects.map((p, i) => (
             <ProjectCard key={p.id} p={p} i={i} />
           ))}
