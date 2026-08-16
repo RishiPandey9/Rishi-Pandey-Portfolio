@@ -9,9 +9,11 @@ function ProjectCard({ p, i }: { p: typeof projects[0]; i: number }) {
     <motion.div
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -6 }}
+      whileTap={{ scale: 0.99 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, delay: i * 0.07, ease: [0.23, 1, 0.32, 1] }}
-      className="group relative border border-white/[0.07] bg-[#111] overflow-hidden flex flex-col"
+      className="group relative border border-white/[0.07] bg-[#111] overflow-hidden flex flex-col transition-[border-color,box-shadow] duration-300 hover:border-[#dc2626]/40 hover:shadow-[0_18px_50px_rgba(0,0,0,0.28)]"
     >
       {/* Image area */}
       <div className="relative h-44 bg-[#0d0d0d] overflow-hidden">

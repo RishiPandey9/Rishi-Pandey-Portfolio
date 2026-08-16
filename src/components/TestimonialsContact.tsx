@@ -11,10 +11,10 @@ const cardVariant = {
 
 export function TestimonialsContact() {
   return (
-    <section id="testimonials" className="relative overflow-hidden">
+    <section id="contact" className="relative overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
         {/* LEFT: dark testimonials */}
-        <div className="relative bg-[#0a0a0a] text-foreground py-20 px-8 md:px-14 overflow-clip">
+        <div className="relative bg-[#0a0a0a] text-foreground py-20 px-8 md:px-14 overflow-visible">
           <div
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
             style={{ background: "radial-gradient(circle, rgba(220,38,38,0.12) 0%, transparent 65%)" }}
@@ -72,10 +72,10 @@ export function TestimonialsContact() {
         </div>
 
         {/* RIGHT: contact form */}
-        <div className="relative bg-[#f5f5f5] text-[#0a0a0a] py-20 px-8 md:px-14 flex flex-col justify-center overflow-clip">
+        <div className="relative bg-[#f5f5f5] text-[#0a0a0a] py-20 px-8 md:px-14 flex flex-col justify-center overflow-visible">
           {/* Red circle decoration */}
           <div
-            className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full pointer-events-none opacity-20"
+            className="absolute bottom-0 left-0 w-64 h-64 rounded-full pointer-events-none opacity-20"
             style={{ background: "radial-gradient(circle, rgba(220,38,38,0.6) 0%, transparent 65%)" }}
           />
 

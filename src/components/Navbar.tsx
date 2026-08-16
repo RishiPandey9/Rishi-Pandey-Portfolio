@@ -14,7 +14,20 @@ export function Navbar() {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const sections = navItems
+      .map((item) => item.href.startsWith("#") ? document.querySelector(item.href) : null)
+      .filter((section): section is Element => Boolean(section));
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) setActive(entry.target.id.toUpperCase());
+      }),
+      { rootMargin: "-35% 0px -55% 0px" },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -23,13 +36,9 @@ export function Navbar() {
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-[#0a0a0a]/92 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_2px_24px_rgba(0,0,0,0.6)]"
-            : "bg-transparent"
-        }`}
+        className="fixed left-0 right-0 top-4 z-50 px-4"
       >
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+        <div className={`mx-auto flex h-14 max-w-[1320px] items-center justify-between rounded-full border px-4 shadow-[0_14px_50px_rgba(0,0,0,0.18)] transition-[background-color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] md:px-6 ${scrolled ? "border-white/[0.12] bg-[#0a0a0a]/92 backdrop-blur-xl" : "border-white/[0.08] bg-[#0a0a0a]/65 backdrop-blur-xl"}`}>
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
             <div className="w-8 h-8 bg-[#dc2626] flex items-center justify-center rounded-sm">
@@ -43,26 +52,20 @@ export function Navbar() {
           {/* Nav links */}
           <nav className="hidden lg:flex items-center gap-7">
             {navItems.map((item) => (
-              <button
+              <Link
                 key={item.name}
+                href={item.href}
                 onClick={() => setActive(item.name)}
                 className="relative flex flex-col items-center gap-0.5 group"
               >
-                <Link
-                  href={item.href}
-                  className={`text-[11px] font-semibold tracking-[0.15em] transition-colors duration-200 ${
-                    active === item.name ? "text-foreground" : "text-foreground/45 hover:text-foreground/80"
-                  }`}
-                >
-                  {item.name}
-                </Link>
+                <span className={`text-[11px] font-semibold tracking-[0.15em] transition-colors duration-200 ${active === item.name || active === item.href.slice(1).toUpperCase() ? "text-foreground" : "text-foreground/45 group-hover:text-foreground/80"}`}>{item.name}</span>
                 {active === item.name && (
                   <motion.span
                     layoutId="nav-indicator"
                     className="w-1 h-1 rounded-full bg-[#dc2626]"
                   />
                 )}
-              </button>
+              </Link>
             ))}
           </nav>
 

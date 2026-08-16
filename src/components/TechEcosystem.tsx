@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import { technologies } from "@/lib/data";
 
 export function TechEcosystem() {
-  const doubled = [...technologies, ...technologies];
-
   return (
     <section className="relative bg-[#f5f5f5] text-[#0a0a0a] py-20 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
@@ -33,15 +31,11 @@ export function TechEcosystem() {
         <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to left, #f5f5f5, transparent)" }} />
 
-        <motion.div
-          className="flex gap-8 whitespace-nowrap"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-        >
-          {doubled.map((tech, i) => (
+        <div className="flex gap-8 overflow-x-auto px-6 pb-2 whitespace-nowrap [scrollbar-width:none] md:px-10 [&::-webkit-scrollbar]:hidden">
+          {technologies.map((tech) => (
             <div
-              key={`${tech.name}-${i}`}
-              className="flex items-center gap-3 px-5 py-3 border border-black/[0.08] bg-white/60 shrink-0 hover:border-[#dc2626]/30 transition-colors duration-200 group"
+              key={tech.name}
+              className="group flex shrink-0 items-center gap-3 rounded-full border border-black/[0.08] bg-white/60 px-5 py-3 transition-[border-color,transform] duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:border-[#dc2626]/30"
             >
               <span className="text-base opacity-60 group-hover:opacity-100 transition-opacity">{tech.icon}</span>
               <span className="text-[12px] font-semibold text-[#0a0a0a]/60 group-hover:text-[#0a0a0a] transition-colors tracking-tight">
@@ -49,7 +43,7 @@ export function TechEcosystem() {
               </span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

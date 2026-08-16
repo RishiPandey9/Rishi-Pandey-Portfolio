@@ -73,9 +73,11 @@ export function Services() {
               key={service.title}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5 }}
+              whileTap={{ scale: 0.99 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.65, delay: i * 0.08 }}
-              className="group border-r border-b border-black/[0.08] p-6 flex flex-col gap-4 hover:bg-white transition-colors duration-300 cursor-default xl:border-b-0 last:border-r-0"
+              className="group border-r border-b border-black/[0.08] p-6 flex flex-col gap-4 hover:bg-white transition-[background-color,box-shadow] duration-300 cursor-default xl:border-b-0 last:border-r-0 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)]"
             >
               <div className="text-[#0a0a0a]/40 group-hover:text-[#dc2626] transition-colors duration-300">
                 {ICONS[service.icon]}

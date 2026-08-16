@@ -15,7 +15,7 @@ const RESOURCES = [
   { name: "Resume", href: personalInfo.resume },
   { name: "Services", href: "#services" },
   { name: "Case Studies", href: "#projects" },
-  { name: "Testimonials", href: "#testimonials" },
+  { name: "Testimonials", href: "#contact" },
 ];
 
 export function Footer() {

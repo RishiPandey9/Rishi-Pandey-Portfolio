@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { personalInfo, heroStats, socialLinks } from "@/lib/data";
 import { useRef } from "react";
+import Image from "next/image";
 import { GithubLogo, LinkedinLogo, TwitterLogo } from "@phosphor-icons/react";
 
 const SOCIAL_ICONS: Record<string, React.ReactNode> = {
@@ -23,7 +24,11 @@ const stagger = {
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const reduceMotion = useReducedMotion();
+  const sceneY = useTransform(scrollYProgress, [0, 1], ["0%", reduceMotion ? "0%" : "16%"]);
+  const sceneScale = useTransform(scrollYProgress, [0, 1], [1, reduceMotion ? 1 : 1.12]);
+  const sceneOpacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 0.92, 0.5]);
+  const frameRotate = useTransform(scrollYProgress, [0, 1], [0, reduceMotion ? 0 : -5]);
 
   return (
     <section
@@ -44,29 +49,17 @@ export function Hero() {
       {/* Red circular glow background */}
       <div
         className="absolute top-[-10%] right-[8%] w-[480px] h-[480px] rounded-full pointer-events-none"
-        style={{ background: "radial-gradient(circle, rgba(220,38,38,0.22) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(circle, rgba(232,98,88,0.28) 0%, rgba(116,32,35,0.12) 38%, transparent 72%)" }}
       />
       <div
-        className="absolute top-[5%] right-[18%] w-[340px] h-[340px] rounded-full pointer-events-none border border-[#dc2626]/10"
+        className="absolute top-[5%] right-[18%] w-[340px] h-[340px] rounded-full pointer-events-none border border-[#e86258]/20"
         style={{ background: "transparent" }}
       />
 
-      {/* Japanese kanji decoration — far right */}
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-white/[0.04] font-bold pointer-events-none select-none hidden xl:block"
-        style={{ writingMode: "vertical-rl", fontSize: "7rem", letterSpacing: "0.1em", fontFamily: "serif" }}>
-        サムライ
-      </div>
-
-      {/* Floating particles */}
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 rounded-full bg-[#dc2626] pointer-events-none"
-          style={{ top: `${20 + i * 12}%`, right: `${25 + (i % 3) * 8}%`, opacity: 0.4 }}
-          animate={{ y: [0, -12, 0], opacity: [0.4, 0.8, 0.4] }}
-          transition={{ duration: 2.5 + i * 0.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
-        />
-      ))}
+      <motion.div
+        style={{ opacity: sceneOpacity }}
+        className="absolute inset-0 pointer-events-none hero-scanlines"
+      />
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 flex-1 flex flex-col">
         {/* Main content row */}
@@ -88,7 +81,7 @@ export function Hero() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={s.label}
-                  className="text-white/30 hover:text-[#dc2626] transition-colors duration-200"
+                  className="text-white/30 hover:text-[#e86258] transition-colors duration-200"
                 >
                   {SOCIAL_ICONS[s.icon]}
                 </a>
@@ -109,8 +102,8 @@ export function Hero() {
               animate="visible"
               className="flex flex-col gap-5 max-w-[600px]"
             >
-              <motion.p variants={item} className="text-[#dc2626] text-xs font-mono tracking-[0.3em] uppercase flex items-center gap-3">
-                <span className="w-6 h-px bg-[#dc2626]" />
+              <motion.p variants={item} className="text-[#e86258] text-xs font-mono tracking-[0.3em] uppercase flex items-center gap-3">
+                <span className="w-6 h-px bg-[#e86258]" />
                 HELLO, I&apos;M
               </motion.p>
 
@@ -118,7 +111,7 @@ export function Hero() {
                 <span className="block text-[clamp(3.5rem,8vw,6.5rem)] text-white">
                   {personalInfo.firstName}
                 </span>
-                <span className="block text-[clamp(3.5rem,8vw,6.5rem)] text-[#dc2626]">
+                <span className="block text-[clamp(3.5rem,8vw,6.5rem)] text-[#e86258]">
                   {personalInfo.lastName.toUpperCase()}
                 </span>
               </motion.h1>
@@ -128,7 +121,7 @@ export function Hero() {
                   I BUILD INTELLIGENT
                 </p>
                 <p className="text-[clamp(1.4rem,3.5vw,2.6rem)] font-bold tracking-tight leading-tight">
-                  DIGITAL <span className="text-[#dc2626]">EXPERIENCES.</span>
+                  DIGITAL <span className="text-[#e86258]">EXPERIENCES.</span>
                 </p>
               </motion.div>
 
@@ -144,81 +137,108 @@ export function Hero() {
               <motion.div variants={item} className="flex flex-wrap gap-3 pt-2">
                 <a
                   href="#projects"
-                  className="group flex items-center gap-2 px-6 py-3 bg-[#dc2626] text-white text-xs font-bold tracking-widest hover:bg-[#b91c1c] transition-colors duration-200"
+                  className="group flex items-center gap-3 rounded-full bg-[#e86258] px-5 py-2.5 text-xs font-bold tracking-widest text-[#150b0b] transition-[background-color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:bg-[#f0786d] active:scale-[0.98]"
                 >
                   VIEW MY WORK
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="group-hover:translate-x-0.5 transition-transform">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-black/10 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1 group-hover:-translate-y-px">
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
                     <path d="M1 13L13 1M13 1H3M13 1V11" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
+                  </span>
                 </a>
                 <a
                   href={personalInfo.resume}
-                  className="flex items-center gap-2 px-6 py-3 border border-white/20 text-white/65 text-xs font-bold tracking-widest hover:border-white/50 hover:text-white transition-all duration-200"
+                  className="group flex items-center gap-3 rounded-full border border-white/20 px-5 py-2.5 text-xs font-bold tracking-widest text-white/65 transition-[border-color,color,transform] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] hover:border-white/50 hover:text-white active:scale-[0.98]"
                 >
                   DOWNLOAD RESUME
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 transition-transform duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-0.5">
                   <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                     <path d="M6.5 1v8M6.5 9l-3-3M6.5 9l3-3M1 12h11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
+                  </span>
                 </a>
               </motion.div>
             </motion.div>
           </div>
 
-          {/* Right: Hero image placeholder + Focus Areas card */}
+          {/* Right: product system visual + Focus Areas card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.1, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
-            style={{ y: imgY }}
             className="relative hidden lg:flex items-end justify-center h-[calc(100dvh-5rem)]"
           >
-            {/* Red circle backdrop */}
-            <div className="absolute top-[5%] right-[5%] w-[420px] h-[420px] rounded-full border-2 border-[#dc2626]/20 pointer-events-none" />
-            <div className="absolute top-[8%] right-[8%] w-[360px] h-[360px] rounded-full bg-[#dc2626]/08 pointer-events-none" />
+            {/* Warm editorial light field */}
+            <div className="hero-light absolute -right-10 top-[2%] h-[520px] w-[520px] rounded-full pointer-events-none" />
+            <div className="absolute right-[8%] top-[12%] h-[390px] w-[390px] rounded-full border border-[#e86258]/25 pointer-events-none" />
+            <div className="absolute right-[17%] top-[21%] h-[250px] w-[250px] rounded-full border border-white/[0.08] pointer-events-none" />
 
-            {/* Silhouette placeholder — cinematic dark shape with red glow */}
-            <div className="relative w-[420px] h-full max-h-[calc(100dvh-6rem)] flex items-end">
-              <div
-                className="absolute inset-0 rounded-none"
-                style={{
-                  background:
-                    "radial-gradient(ellipse 60% 80% at 50% 60%, rgba(220,38,38,0.18) 0%, transparent 70%), linear-gradient(to top, #0a0a0a 0%, transparent 50%)",
-                }}
-              />
-              <div
-                className="absolute inset-0 flex items-center justify-center opacity-10"
-                style={{
-                  background:
-                    "radial-gradient(ellipse 40% 60% at 50% 45%, rgba(220,38,38,0.6) 0%, transparent 60%)",
-                }}
-              />
-              {/* Silhouette shape */}
-              <svg
-                viewBox="0 0 300 500"
-                className="w-full h-full opacity-[0.06]"
-                fill="white"
-                preserveAspectRatio="xMidYMax meet"
-              >
-                <ellipse cx="150" cy="120" rx="55" ry="60" />
-                <path d="M70 200 Q150 160 230 200 L260 480 Q150 500 40 480 Z" />
-              </svg>
-            </div>
+            {/* Abstract product system visual. A Firebase video can replace it through heroVideoUrl. */}
+            <motion.div
+              style={{ y: sceneY, scale: sceneScale, rotate: frameRotate }}
+              className="absolute inset-0 flex items-end justify-center pb-10 will-change-transform"
+            >
+              <div className="relative h-[82%] w-[88%] max-w-[520px] hero-frame">
+                {personalInfo.heroVideoUrl ? (
+                  <video
+                    src={personalInfo.heroVideoUrl}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    poster=""
+                    aria-label="Cinematic hero reel"
+                    className="h-full w-full rounded-[2rem] object-cover opacity-85"
+                  />
+                ) : (
+                  <div className="hero-portrait-shell h-full w-full rounded-[2rem] border border-white/15 bg-white/[0.04] p-3 shadow-[0_30px_80px_rgba(0,0,0,0.38)]">
+                    <div className="relative h-full overflow-hidden rounded-[1.5rem] border border-white/10 bg-[#242424]">
+                      <Image src="/profile.png" alt="Portrait of Rishi Pandey" fill priority className="object-cover object-top grayscale-[0.18] contrast-[1.04]" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#090707] via-transparent to-[#e86258]/10" />
+                      <div className="absolute inset-x-5 top-5 flex items-center justify-between text-[9px] font-mono tracking-[0.2em] text-white/55">
+                        <span>RISHI / 01</span>
+                        <span className="flex items-center gap-2"><i className="h-1.5 w-1.5 rounded-full bg-[#e86258]" /> AVAILABLE</span>
+                      </div>
+                      <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between gap-4">
+                        <div>
+                          <p className="text-[clamp(1.7rem,3vw,2.7rem)] font-black tracking-[-0.06em] text-white">BUILD WITH INTENT.</p>
+                          <p className="mt-1 text-[10px] font-mono tracking-[0.18em] text-white/50">AI · WEB · PRODUCT ENGINEERING</p>
+                        </div>
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/25 text-[#e86258]">↗</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {/* Overlay gradient to blend image bottom */}
+                <div className="absolute inset-x-[14%] top-[12%] bottom-[20%] border border-white/[0.08]" />
+                <div className="absolute left-[14%] top-[12%] h-10 w-px bg-[#e86258]" />
+                <div className="absolute right-[14%] bottom-[20%] h-10 w-px bg-[#e86258]" />
+              </div>
+            </motion.div>
+
+            <motion.div
+              style={{ opacity: sceneOpacity }}
+              className="absolute left-5 bottom-20 flex items-center gap-3 text-[9px] font-mono tracking-[0.25em] text-white/35 uppercase"
+            >
+              <span className="h-px w-10 bg-[#e86258]" />
+              Scroll / enter the frame
+            </motion.div>
 
             {/* Focus Areas card */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.9 }}
-              className="absolute top-[20%] right-0 w-48 bg-[#111]/90 backdrop-blur-md border border-white/10 p-4"
+              className="absolute top-[20%] right-0 w-48 border border-white/10 bg-[#111] p-4"
             >
               <div className="flex items-center justify-between mb-3">
                 <p className="text-[9px] font-mono tracking-[0.2em] text-white/40 uppercase">Focus Areas</p>
-                <span className="text-[#dc2626] text-xs">+</span>
+                <span className="text-[#e86258] text-xs">+</span>
               </div>
               <ul className="flex flex-col gap-2">
                 {["AI Development", "Web Applications", "Automation", "Product Engineering"].map((item) => (
                   <li key={item} className="flex items-center gap-2 text-[11px] text-white/70">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#dc2626]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#e86258]" />
                     {item}
                   </li>
                 ))}
@@ -236,7 +256,7 @@ export function Hero() {
         >
           {heroStats.map((stat) => (
             <div key={stat.label} className="flex items-center gap-3">
-              <div className="w-8 h-8 border border-white/10 flex items-center justify-center text-[#dc2626] opacity-60">
+              <div className="w-8 h-8 border border-white/10 flex items-center justify-center text-[#e86258] opacity-60">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <circle cx="7" cy="7" r="5" stroke="currentColor" strokeWidth="1.2"/>
                   <path d="M7 4v3l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>

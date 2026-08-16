@@ -10,6 +10,7 @@ export const personalInfo = {
   github: "https://github.com/RishiPandey9",
   twitter: "https://twitter.com/rishipandey",
   resume: "/resume.pdf",
+  heroVideoUrl: "",
   location: "Nagpur, India",
   availability: "Full-time & Freelance",
   focus: "AI, Web, Product Engineering",
@@ -33,7 +34,7 @@ export const navItems = [
   { name: "EXPERIENCE", href: "#experience" },
   { name: "PROJECTS", href: "#projects" },
   { name: "BLOG", href: "#blog" },
-  { name: "CONTACT", href: "#testimonials" },
+  { name: "CONTACT", href: "#contact" },
 ];
 
 export const socialLinks = [
@@ -165,18 +166,18 @@ export const services = [
 ];
 
 export const technologies = [
-  { name: "React", icon: "⚛️" },
+  { name: "React", icon: "R" },
   { name: "Next.js", icon: "▲" },
   { name: "TypeScript", icon: "TS" },
-  { name: "Node.js", icon: "🟢" },
-  { name: "Python", icon: "🐍" },
-  { name: "PostgreSQL", icon: "🐘" },
+  { name: "Node.js", icon: "N" },
+  { name: "Python", icon: "Py" },
+  { name: "PostgreSQL", icon: "PG" },
   { name: "Prisma", icon: "◆" },
   { name: "OpenAI", icon: "✦" },
-  { name: "AWS", icon: "☁️" },
-  { name: "Docker", icon: "🐳" },
+  { name: "AWS", icon: "AWS" },
+  { name: "Docker", icon: "D" },
   { name: "Git", icon: "◎" },
-  { name: "Figma", icon: "✏️" },
+  { name: "Figma", icon: "F" },
   { name: "Framer Motion", icon: "◉" },
 ];
 
